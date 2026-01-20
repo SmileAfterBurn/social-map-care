@@ -33,7 +33,6 @@ export const GeminiChat: React.FC<GeminiChatProps> = ({ organizations, isOpen, o
   const [selectedVoice, setSelectedVoice] = useState<GeminiVoice>('Kore');
   const [showVoiceMenu, setShowVoiceMenu] = useState(false);
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
-  const [userLoc, setUserLoc] = useState<{lat: number, lng: number} | undefined>();
   const [showValidationError, setShowValidationError] = useState(false);
   
   const liveSessionRef = useRef<LiveSession | null>(null);
@@ -46,10 +45,6 @@ export const GeminiChat: React.FC<GeminiChatProps> = ({ organizations, isOpen, o
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-      navigator.geolocation.getCurrentPosition(
-        (pos) => setUserLoc({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-        () => console.log("Location access denied")
-      );
       if (prefillPrompt) handleSend(prefillPrompt);
     }
   }, [isOpen, prefillPrompt]);
@@ -109,7 +104,7 @@ export const GeminiChat: React.FC<GeminiChatProps> = ({ organizations, isOpen, o
     setIsLoading(true);
     
     try {
-      const result: AnalyzeResult = await analyzeData(trimmedText, organizations, userLoc, isThinkingMode && canUseThinking);
+      const result: AnalyzeResult = await analyzeData(trimmedText, organizations, isThinkingMode && canUseThinking);
       
       if (result.functionCalls) {
         result.functionCalls.forEach(fc => {
@@ -283,8 +278,9 @@ export const GeminiChat: React.FC<GeminiChatProps> = ({ organizations, isOpen, o
              <button onClick={handleSummary} className="whitespace-nowrap flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-800 text-[10px] font-black uppercase tracking-widest hover:bg-indigo-100 dark:hover:bg-indigo-800 transition shadow-sm">
                <BarChart size={12} /> Огляд регіону
              </button>
-             <button onClick={() => setInput("Актуалізуй контакти найближчих хабів через Google Maps")} className="whitespace-nowrap flex items-center gap-2 px-4 py-2.5 rounded-xl bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 border border-teal-100 dark:border-teal-800 text-[10px] font-black uppercase tracking-widest hover:bg-teal-100 dark:hover:bg-teal-800 transition shadow-sm">
-               <MapPin size={12} /> Знайти поруч (Maps)
+             <button onClick={() => setInput("Актуалізуй контакти найближчих хабів")}
+                className="whitespace-nowrap flex items-center gap-2 px-4 py-2.5 rounded-xl bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 border border-teal-100 dark:border-teal-800 text-[10px] font-black uppercase tracking-widest hover:bg-teal-100 dark:hover:bg-teal-800 transition shadow-sm">
+                <MapPin size={12} /> Знайти поруч
              </button>
              <button 
                 disabled={!canUseThinking}

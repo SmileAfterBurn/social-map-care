@@ -7,7 +7,9 @@ import L from 'leaflet';
 
 // @ts-ignore
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import 'react-leaflet-markercluster/dist/styles.min.css';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+
 
 // Fix for default icon path in Leaflet with bundlers
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
