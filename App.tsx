@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, Sparkles, MapPin, Sun, Moon, Globe, Heart, Database, PhoneForwarded, Key, ExternalLink, ArrowRight, User as UserIcon, Shield, Lock, Activity, Zap, Gauge, Filter, Home, HandHelping, Scale, Building2, LayoutGrid, Handshake } from 'lucide-react';
+import { Search, Sparkles, MapPin, Sun, Moon, Globe, Heart, Database, PhoneForwarded, Key, ExternalLink, ArrowRight, User as UserIcon, Shield, Lock, Activity, Zap, Gauge, Filter, Home, HandHelping, Scale, Building2, LayoutGrid, Handshake, Cpu, X } from 'lucide-react';
 import { MapView } from './components/MapView';
 import { TableView } from './components/TableView';
 import { GeminiChat } from './components/GeminiChat';
