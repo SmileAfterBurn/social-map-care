@@ -1,0 +1,4 @@
+name: illia_chernov@cloudshell/gen-lang-client-0037516686/policies/iam.managed.disableServiceAccountApiKeyCreation
+spec:
+  rules:
+  - enforce: false
