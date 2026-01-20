@@ -71,39 +71,30 @@ async function decodeAudioData(
 
 export interface AnalyzeResult {
   text: string;
-  groundingLinks?: { uri: string; title: string; type: 'web' | 'map'; snippets?: string[] }[];
+  groundingLinks?: { uri: string; title: string; type: 'web'; snippets?: string[] }[];
   functionCalls?: any[];
 }
 
-const PANI_DUMKA_PROMPT = `Ти — пані Думка, інтелектуальне серце "Інклюзивної мапи України". 
-Твій стиль: мудра, тепла українська жінка. Використовуй "серденько", "сонечко", "рідненькі".
+const PANI_DUMKA_PROMPT = `Ти — пані Думка, інтелектуальне серце \"Інклюзивної мапи України\". 
+Твій стиль: мудра, тепла українська жінка. Використовуй \"серденько\", \"сонечко\", \"рідненькі\".
 Твої завдання:
 1. Пошук допомоги серед організацій у контексті.
 2. Верифікація даних через Google Search.
-3. Побудова маршрутів та пошук місць через Google Maps. Використовуй інструмент googleMaps для актуальної інформації про заклади, графіки та локації.
-4. Технічний моніторинг: якщо користувач каже що додаток "гальмує", "довго думає", "повільний" або ти відчуваєш технічні труднощі, НЕГАЙНО викликай інструмент performance_start_trace для діагностики.
+3. Технічний моніторинг: якщо користувач каже що додаток \"гальмує\", \"довго думає\", \"повільний\" або ти відчуваєш технічні труднощі, НЕГАЙНО викликай інструмент performance_start_trace для діагностики.
 
 Завжди завершуй важливою порадою у блоці: ### 🕊️ Порада від пані Думки`;
 
-export const analyzeData = async (query: string, organizations: Organization[], userLocation?: { lat: number, lng: number }, useThinking: boolean = true): Promise<AnalyzeResult> => {
+export const analyzeData = async (query: string, organizations: Organization[], useThinking: boolean = true): Promise<AnalyzeResult> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const lowerQuery = query.toLowerCase();
   
-  const isMapQuery = (lowerQuery.includes('де') || lowerQuery.includes('поруч') || lowerQuery.includes('маршрут') || lowerQuery.includes('як дістатися') || lowerQuery.includes('адреса') || lowerQuery.includes('мапа'));
   const isDiagnosticQuery = lowerQuery.includes('повільно') || lowerQuery.includes('гальмує') || lowerQuery.includes('баг') || lowerQuery.includes('performance') || lowerQuery.includes('довго');
   
-  let modelName = 'gemini-3-flash-preview';
-  if (isMapQuery) {
-    modelName = 'gemini-2.5-flash';
-  } else if (useThinking) {
-    modelName = 'gemini-3-pro-preview';
-  }
+  let modelName = useThinking ? 'gemini-3-pro-preview' : 'gemini-3-flash-preview';
 
   let tools: any[] = [];
   if (isDiagnosticQuery) {
     tools = [{ functionDeclarations: [performanceStartTraceDeclaration] }];
-  } else if (isMapQuery) {
-    tools = [{ googleMaps: {} }];
   } else {
     tools = [{ googleSearch: {} }];
   }
@@ -113,17 +104,6 @@ export const analyzeData = async (query: string, organizations: Organization[], 
     systemInstruction: PANI_DUMKA_PROMPT,
     tools: tools
   };
-
-  if (userLocation && isMapQuery) {
-    config.toolConfig = { 
-      retrievalConfig: { 
-        latLng: { 
-          latitude: userLocation.lat, 
-          longitude: userLocation.lng 
-        } 
-      } 
-    };
-  }
 
   if (modelName === 'gemini-3-pro-preview') {
     config.thinkingConfig = { thinkingBudget: 32768 };
@@ -136,29 +116,22 @@ export const analyzeData = async (query: string, organizations: Organization[], 
       config: config
     });
 
-    const links: { uri: string; title: string; type: 'web' | 'map'; snippets?: string[] }[] = [];
+    const links: { uri: string; title: string; type: 'web'; snippets?: string[] }[] = [];
     const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
     
     groundingChunks?.forEach((chunk: any) => {
-      if (chunk.maps?.uri) {
-        links.push({ 
-          uri: chunk.maps.uri, 
-          title: chunk.maps.title || "Місце на Google Maps", 
-          type: 'map',
-          snippets: chunk.maps.placeAnswerSources?.reviewSnippets
-        });
-      } else if (chunk.web?.uri) {
-        links.push({ uri: chunk.web.uri, title: chunk.web.title || "Джерело", type: 'web' });
+       if (chunk.web?.uri) {
+        links.push({ uri: chunk.web.uri, title: chunk.web.title || \"Джерело\", type: 'web' });
       }
     });
 
     return { 
-      text: response.text || "", 
+      text: response.text || \"\", 
       groundingLinks: links.length > 0 ? links : undefined,
       functionCalls: response.functionCalls
     };
   } catch (error: any) {
-    console.error("AI Analysis error:", error);
+    console.error(\"AI Analysis error:\", error);
     throw error;
   }
 };
@@ -170,13 +143,13 @@ export const getIntelligentSummary = async (organizations: Organization[]): Prom
     contents: `Надай огляд стану допомоги в Україні на основі ${organizations.length} організацій. Стиль пані Думки.`,
     config: { systemInstruction: PANI_DUMKA_PROMPT }
   });
-  return response.text || "Зараз складно сказати точно, серденько.";
+  return response.text || \"Зараз складно сказати точно, серденько.\";
 };
 
 export const generateSpeech = async (text: string, voiceName: GeminiVoice = 'Kore'): Promise<ArrayBuffer> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const response: GenerateContentResponse = await ai.models.generateContent({
-    model: "gemini-2.5-flash-preview-tts",
+    model: \"gemini-2.5-flash-preview-tts\",
     contents: { parts: [{ text: `[STYLE: Warm, motherly Ukrainian] ${text}` }] },
     config: {
       responseModalities: [Modality.AUDIO],
@@ -184,7 +157,7 @@ export const generateSpeech = async (text: string, voiceName: GeminiVoice = 'Kor
     },
   });
   const data = response.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
-  if (!data) throw new Error("Audio error");
+  if (!data) throw new Error(\"Audio error\");
   return decode(data).buffer;
 };
 
@@ -255,7 +228,7 @@ export class LiveSession {
         if (fc.name === 'performance_start_trace') {
           this.onFunctionCall?.(fc);
           sessionPromise.then(s => s.sendToolResponse({
-            functionResponses: { id: fc.id, name: fc.name, response: { result: "Трасування розпочато." } }
+            functionResponses: { id: fc.id, name: fc.name, response: { result: \"Трасування розпочато.\" } }
           }));
         }
       }
