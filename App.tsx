@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, Sparkles, MapPin, Sun, Moon, Globe, Heart, Database, PhoneForwarded, Key, ExternalLink, ArrowRight, User as UserIcon, Shield, Lock, Activity, Zap, Gauge, Filter, Home, HandHelping, Scale, Building2, LayoutGrid, Handshake } from 'lucide-center';
+import { Search, Sparkles, MapPin, Sun, Moon, Globe, Heart, Database, PhoneForwarded, Key, ExternalLink, ArrowRight, User as UserIcon, Shield, Lock, Activity, Zap, Gauge, Filter, Home, HandHelping, Scale, Building2, LayoutGrid, Handshake } from 'lucide-react';
 import { MapView } from './components/MapView';
 import { TableView } from './components/TableView';
 import { GeminiChat } from './components/GeminiChat';
@@ -220,16 +220,18 @@ const App: React.FC = () => {
           <div className="absolute inset-0 z-0">
             <MapView
               organizations={filteredOrgs}
-              userLocation={null}
+              selectedOrgId={selectedOrgId}
               onSelectOrg={setSelectedOrgId}
-              activeRegion={activeRegion}
+              onOpenReferral={setReferralOrg}
             />
           </div>
         ) : (
           <div className="h-full overflow-hidden bg-slate-50 dark:bg-slate-900">
             <TableView
               organizations={filteredOrgs}
-              onSelectOrg={(org) => setSelectedOrgId(org.id)}
+              selectedOrgId={selectedOrgId}
+              onSelectOrg={setSelectedOrgId}
+              user={currentUser}
             />
           </div>
         )}
@@ -245,8 +247,11 @@ const App: React.FC = () => {
 
       {isChatOpen && (
         <GeminiChat
+          isOpen={isChatOpen}
           onClose={() => setIsChatOpen(false)}
-          prefillMessage={chatPrefill || undefined}
+          prefillPrompt={chatPrefill || undefined}
+          organizations={organizations}
+          user={currentUser}
         />
       )}
     </div>
