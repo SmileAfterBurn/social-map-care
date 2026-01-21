@@ -5,7 +5,6 @@ import { Navigation, MapPin, ZoomIn, ZoomOut, LocateFixed } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// @ts-ignore
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
@@ -26,7 +25,7 @@ L.Icon.Default.mergeOptions({
 interface MapViewProps {
   organizations: Organization[];
   selectedOrgId: string | null;
-  onSelectOrg: (id: string) => void;
+  onSelectOrg: (id: string | null) => void;
   onOpenReferral: (org: Organization) => void;
   center?: [number, number];
   zoom?: number;
@@ -48,6 +47,7 @@ export const MapView: React.FC<MapViewProps> = ({
   organizations = [],
   selectedOrgId,
   onSelectOrg,
+  onOpenReferral,
   center = [48.3794, 31.1656],
   zoom = 6,
   isDarkMode = false
@@ -66,9 +66,7 @@ export const MapView: React.FC<MapViewProps> = ({
 
   useEffect(() => {
     const org = organizations.find(o => o.id === selectedOrgId);
-    if (org) {
-        setActiveOrg(org);
-    }
+    setActiveOrg(org || null);
   }, [selectedOrgId, organizations]);
 
   const getMarkerIcon = (isSelected: boolean) => {
@@ -90,7 +88,7 @@ export const MapView: React.FC<MapViewProps> = ({
     mapRef.current?.locate().on('locationfound', (e) => {
         mapRef.current?.flyTo(e.latlng, 14);
     }).on('locationerror', () => {
-        alert("Дозвольте доступ до геолокації.");
+        alert("Доступ до геолокації заборонено.");
     });
   }
 
@@ -101,7 +99,6 @@ export const MapView: React.FC<MapViewProps> = ({
             zoom={zoom} 
             style={{ height: '100%', width: '100%' }}
             className={isDarkMode ? 'dark-map' : ''}
-            // @ts-ignore
             ref={mapRef}
             zoomControl={false}
         >
@@ -123,23 +120,25 @@ export const MapView: React.FC<MapViewProps> = ({
                                 onSelectOrg(org.id);
                             },
                         }}
-                    />
+                    >
+                        <Popup>
+                            <div className="p-1 min-w-[220px] text-slate-900 font-sans">
+                                <button onClick={() => onSelectOrg(null)} className="absolute top-2 right-2 text-slate-500 hover:text-slate-800">X</button>
+                                <h3 className="font-black text-xs uppercase mb-1">{org.name}</h3>
+                                <p className="text-[10px] text-slate-500 mb-3 flex items-center gap-1"><MapPin size={10} /> {org.address}</p>
+                                <div className="flex flex-col gap-2">
+                                    <button onClick={() => onOpenReferral(org)} className="py-2.5 bg-indigo-600 text-white text-[9px] font-black uppercase rounded-lg text-center">Записатись</button>
+                                    <div className="flex gap-2">
+                                        {org.phone && <a href={`tel:${org.phone.replace(/[^\d+]/g, '')}`} className="flex-1 py-2.5 bg-teal-600 text-white text-[9px] font-black uppercase rounded-lg text-center">Дзвінок</a>}
+                                        <a href={`https://www.google.com/maps/dir/?api=1&destination=${org.lat},${org.lng}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-lg"><Navigation size={18} /></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </Popup>
+                    </Marker>
                 );
             })}
         </MarkerClusterGroup>
-
-        {activeOrg && (
-            <Popup position={[activeOrg.lat, activeOrg.lng]}>
-                 <div className="p-1 min-w-[220px] text-slate-900 font-sans">
-                    <h3 className="font-black text-xs uppercase mb-1">{activeOrg.name}</h3>
-                    <p className="text-[10px] text-slate-500 mb-3 flex items-center gap-1"><MapPin size={10} /> {activeOrg.address}</p>
-                    <div className="flex gap-2">
-                        {activeOrg.phone && <a href={`tel:${activeOrg.phone.replace(/[^\d+]/g, '')}`} className="flex-1 py-2.5 bg-teal-600 text-white text-[9px] font-black uppercase rounded-lg text-center">Дзвінок</a>}
-                        <a href={`https://www.google.com/maps/dir/?api=1&destination=${activeOrg.lat},${activeOrg.lng}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-indigo-50 text-indigo-600 rounded-lg"><Navigation size={18} /></a>
-                    </div>
-                </div>
-            </Popup>
-        )}
 
         <ActiveOrgEffect activeOrg={activeOrg} />
 
