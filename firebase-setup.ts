@@ -5,7 +5,7 @@ const { initializeAppCheck, ReCaptchaEnterpriseProvider, getToken } = appCheckMo
 
 // Використовуємо змінні середовища для конфігурації клієнтського SDK
 const firebaseConfig = {
-  apiKey: process.env.API_KEY || "",
+  apiKey: import.meta.env.VITE_API_KEY || "",
   authDomain: "gen-lang-client-0037516686.firebaseapp.com",
   projectId: "gen-lang-client-0037516686",
   storageBucket: "gen-lang-client-0037516686.firebasestorage.app",
