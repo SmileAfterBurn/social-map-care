@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { LatLngBoundsExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { MapView } from './components/MapView';
-import { TableView } from './components/TableView';
-import { FilterModal } from './components/FilterModal';
-import { Organization, RegionName, UserSession } from './types';
-import { INITIAL_ORGANIZATIONS } from './organizations';
+import { MapView } from '../components/MapView';
+import { TableView } from '../components/TableView';
+import { FilterModal } from '../components/FilterModal';
+import { Organization, RegionName, UserSession } from '../types';
+import { INITIAL_ORGANIZATIONS } from '../organizations';
 
 const UKRAINE_BOUNDS: LatLngBoundsExpression = [[44.3, 22.1], [52.4, 40.2]];
 
