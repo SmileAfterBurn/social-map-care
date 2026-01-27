@@ -9,7 +9,6 @@ import MarkerClusterGroup from 'react-leaflet-markercluster';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
-
 // Fix for default icon path in Leaflet with bundlers
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
@@ -41,7 +40,6 @@ const ActiveOrgEffect: React.FC<{ activeOrg: Organization | null }> = ({ activeO
     }, [activeOrg, map]);
     return null;
 };
-  
 
 export const MapView: React.FC<MapViewProps> = ({
   organizations = [],
@@ -69,7 +67,33 @@ export const MapView: React.FC<MapViewProps> = ({
     setActiveOrg(org || null);
   }, [selectedOrgId, organizations]);
 
-  const getMarkerIcon = (isSelected: boolean) => {
+  const getMarkerIcon = (org: Organization, isSelected: boolean) => {
+    if (org.logoUrl) {
+      const borderColor = isSelected ? (isDarkMode ? '#818cf8' : '#4f46e5') : (isDarkMode ? '#2dd4bf' : '#0d9488');
+      const shadow = isSelected ? 'drop-shadow(0 0 8px rgba(79, 70, 229, 0.7))' : 'drop-shadow(0 0 3px rgba(13, 148, 136, 0.5))';
+      
+      return new L.DivIcon({
+        html: `
+          <div style="
+            width: 40px; 
+            height: 40px; 
+            border-radius: 9999px; 
+            background-image: url(${org.logoUrl}); 
+            background-size: cover; 
+            background-position: center; 
+            border: 3px solid ${borderColor};
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            filter: ${shadow};
+            transition: all 0.2s ease-in-out;
+            transform: ${isSelected ? 'scale(1.1)' : 'scale(1)'};
+          "></div>
+        `,
+        className: '',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+      });
+    }
+
     const primaryColor = isSelected ? (isDarkMode ? '#818cf8' : '#4f46e5') : (isDarkMode ? '#2dd4bf' : '#0d9488');
     const strokeColor = isDarkMode ? '#0f172a' : '#ffffff';
     const svg = `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 38C20 38 34 26.8629 34 16C34 8.26801 27.732 2 20 2C12.268 2 6 8.26801 6 16C6 26.8629 20 38 20 38Z" fill="${primaryColor}" stroke="${strokeColor}" stroke-width="2.5"/><circle cx="20" cy="16" r="6" fill="${strokeColor}"/></svg>`;
@@ -114,7 +138,7 @@ export const MapView: React.FC<MapViewProps> = ({
                     <Marker
                         key={org.id}
                         position={[org.lat, org.lng]}
-                        icon={getMarkerIcon(isSelected)}
+                        icon={getMarkerIcon(org, isSelected)}
                         eventHandlers={{
                             click: () => {
                                 onSelectOrg(org.id);

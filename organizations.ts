@@ -15,7 +15,8 @@ export const INITIAL_ORGANIZATIONS: Organization[] = [
     email: 'zaporizhzhia.office@posmishka.org.ua',
     status: 'Active',
     driveFolderUrl: '', budget: 0,
-    workingHours: 'Пн-Пт 09:00-18:00'
+    workingHours: 'Пн-Пт 09:00-18:00',
+    logoUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiMwMEFFRUEiLz4KPHBhdGggZD0iTTI4IDEzQzI4IDEzIDI1IDE2IDIyIDE2QzE5IDE2IDIwIDEwIDI2IDhDMzIgNiAyOCAxMyAyOCAxM1oiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xMiAxM0MxMiAxMyAxNSAxNiAxOCAxNkMyMSAxNiAyMCAxMCAxNCA4QzggNiAxMiAxMyAxMiAxM1oiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xMiAyMkMxMiAyNyAxNSAyNyAxOCAyN0MyMSAyNyAyNCAzMCAyMCAzMkMxNiAzNCAxMiAyNyAxMiAyMloiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0yOCAyMkMyOCAyNyAyNSAyNyAyMiAyN0MxOSAyNyAxNiAzMCAyMCAzMkMyNCAzNCAyOCAyNyAyOCAyMloiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo='
   },
   {
     id: 'mariupol_zp',
@@ -29,7 +30,8 @@ export const INITIAL_ORGANIZATIONS: Organization[] = [
     email: 'help@iamariupol.org',
     status: 'Active',
     driveFolderUrl: '', budget: 0,
-    workingHours: 'Пн-Сб 08:00-18:00'
+    workingHours: 'Пн-Сб 08:00-18:00',
+    logoUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiMwMDQ1ODgiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMCAxMEwxMyAyMEwxNiAyOEwyNCAyOEwyNyAyMEwyMCAxMFpNMjAgMTZMMjIgMjBMMjAgMjRIMTguNUwxOCAyMEwyMCAxNloiIGZpbGw9IiNGRkRCMDAiLz4KPC9zdmc+Cg=='
   },
   // --- КИЇВ ---
   {
@@ -44,7 +46,8 @@ export const INITIAL_ORGANIZATIONS: Organization[] = [
     email: 'kyiv@iamariupol.org',
     status: 'Active',
     driveFolderUrl: '', budget: 0,
-		workingHours: 'Пн-Пт 09:00-18:00'
+		workingHours: 'Пн-Пт 09:00-18:00',
+    logoUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiMwMDQ1ODgiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMCAxMEwxMyAyMEwxNiAyOEwyNCAyOEwyNyAyMEwyMCAxMFpNMjAgMTZMMjIgMjBMMjAgMjRIMTguNUwxOCAyMEwyMCAxNloiIGZpbGw9IiNGRkRCMDAiLz4KPC9zdmc+Cg=='
   },
   {
     id: 'caritas_kyiv',
@@ -58,7 +61,69 @@ export const INITIAL_ORGANIZATIONS: Organization[] = [
     email: 'info@caritas.kyiv.ua',
     status: 'Active',
     driveFolderUrl: '', budget: 0,
-		workingHours: 'Пн-Пт 09:00-18:00'
+		workingHours: 'Пн-Пт 09:00-18:00',
+    logoUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiMwMDk1Q0MiLz4KPHBhdGggZD0iTTIwIDEyQzE3LjUgMTIgMTUgMTQuNSAxNSAxN0MxNSAxOS41IDE3LjUgMjIgMjAgMjJDMjIuNSAyMiAyNSAxOS41IDI1IDE3QzI1IDE0LjUgMjIuNSAxMiAyMCAxMlpNMjAgMTVDMjEuMTUgMTUgMjIgMTUuODUgMjIgMTdDMjIgMTguMTUgMjEuMTUgMTkgMjAgMTlDMTguODUgMTkgMTggMTguMTUgMTggMTdDMTggMTUuODUgMTguODUgMTUgMjAgMTVaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTAgMjVMMjAgMzVMMzAgMjVMMjAgMjdMMTAgMjVaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K'
+  },
+    // --- ДОДАНІ МІЖНАРОДНІ ОРГАНІЗАЦІЇ ---
+  {
+    id: 'drc_kyiv',
+    name: 'Данська рада у справах біженців (DRC)',
+    region: 'Kyiv',
+    address: 'м. Київ, вул. Іллінська, 8',
+    lat: 50.465, lng: 30.522,
+    category: 'Міжнародна організація',
+    services: 'Правова допомога, гуманітарне роззброєння, соціально-економічна підтримка',
+    phone: '+38 044 334 56 43',
+    email: 'ukraine@drc.ngo',
+    status: 'Active',
+    driveFolderUrl: '', budget: 0,
+    workingHours: 'Пн-Пт 09:00-17:00',
+    logoUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSIyMCIgZmlsbD0id2hpdGUiLz48cGF0aCBkPSJNMjAgMjBIMzBWMTBIMjBaTTMwIDIwVjMwSDIwWk0yMCAyMEgxMFYzMEgyMFpNMTAgMjBWMTEuNUgxOFYyMFoiIGZpbGw9IiNGRjAwMDAiLz48L3N2Zz4='
+  },
+  {
+    id: 'nrc_lviv',
+    name: 'Норвезька рада у справах біженців (NRC)',
+    region: 'Lviv',
+    address: 'м. Львів, вул. Городоцька, 83',
+    lat: 49.838, lng: 23.999,
+    category: 'Міжнародна організація',
+    services: 'Правова допомога (IDP), житло, водопостачання та санітарія',
+    phone: '0 800 302 007',
+    email: 'ua.info@nrc.no',
+    status: 'Active',
+    driveFolderUrl: '', budget: 0,
+    workingHours: 'Пн-Пт 09:00-17:00',
+    logoUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSIyMCIgZmlsbD0iIzE5MTkxOSIvPjxwYXRoIGQ9Ik0xMCAxMEgyMFYyMEgxMFYxMFpNMjAgMTBIMzBWMjBIMjBWMjBaTTIwIDIwSDMwVjMwSDIwVjIwWiIgZmlsbD0id2hpdGUiLz48L3N2Zz4='
+  },
+  {
+    id: 'proliska_dnipro',
+    name: 'ГО "Проліска"',
+    region: 'Dnipro',
+    address: 'м. Дніпро, вул. Старокозацька, 40Б',
+    lat: 48.458, lng: 35.038,
+    category: 'Гуманітарна місія',
+    services: 'Соціальний супровід, психологічна допомога, гуманітарна допомога, транспорт',
+    phone: '+38 093 191 18 01',
+    email: 'info@proliska.org',
+    status: 'Active',
+    driveFolderUrl: '', budget: 0,
+    workingHours: 'Пн-Пт 10:00-18:00',
+    logoUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiMwMDU0NzUiLz4KPHBhdGggZD0iTTE4IDEyTDIxIDEyTDIzIDE4TDI1IDEyTDI4IDEyTDI0IDIyTDI4IDMyTDI1IDMyTDIzIDI2TDIxIDMyTDE4IDMyTDIyIDIyTDE4IDEyWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg=='
+  },
+  {
+    id: 'r2p_dnipro',
+    name: 'БФ "Право на захист" (R2P)',
+    region: 'Dnipro',
+    address: 'м. Дніпро, пр. Дмитра Яворницького, 72А',
+    lat: 48.46, lng: 35.04,
+    category: 'Благодійна організація',
+    services: 'Правова допомога, реєстрація ВПО, моніторинг',
+    phone: '0 800 750 104',
+    email: 'info@r2p.org.ua',
+    status: 'Active',
+    driveFolderUrl: '', budget: 0,
+    workingHours: 'Пн-Пт 09:00-18:00',
+    logoUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiMwMDAwMDAiLz4KPHBhdGggZD0iTTEzIDEzTDI3IDEzTDI3IDI3TDEzIDI3TDEzIDEzWiIgZmlsbD0iI0ZGRkYwMCIvPgo8cGF0aCBkPSJNMTYgMTZIMjRWMjRIMTZWMTZaIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4K'
   }
 ];
 

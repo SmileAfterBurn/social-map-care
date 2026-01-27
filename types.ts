@@ -1,4 +1,4 @@
-export type UserRole = 'Guest' | 'Partner' | 'Manager' | 'Admin';
+export type UserRole = 'Guest' | 'Partner' | 'Manager' | 'Admin' | 'Creator';
 
 export interface UserSession {
   id: string;
@@ -28,6 +28,7 @@ export interface Organization {
   establishedDate?: string; 
   website?: string;
   notes?: string;
+  logoUrl?: string;
 }
 
 export interface RemoteSupportActor {
@@ -69,6 +70,7 @@ export interface SyncStatus {
 // Global Declarations for Browser and ProcessShim
 declare global {
   interface Window {
+    aistudio: any; 
     process?: {
       env: {
         API_KEY: string;
