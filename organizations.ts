@@ -8,7 +8,7 @@ export const INITIAL_ORGANIZATIONS: Organization[] = [
     name: 'БФ "Посмішка ЮА" (Центральний офіс)',
     region: 'Zaporizhzhia',
     address: 'м. Запоріжжя, пр. Соборний, 189',
-    lat: 47.8542, lng: 35.1015,
+    lat: 47.8525, lng: 35.1018,
     category: 'Благодійна організація',
     services: 'Кейс-менеджмент, Юридична допомога, Простір дружній до дитини',
     phone: '+38 050 460 22 40',
@@ -22,7 +22,7 @@ export const INITIAL_ORGANIZATIONS: Organization[] = [
     name: 'Центр "ЯМаріуполь" Запоріжжя',
     region: 'Zaporizhzhia',
     address: 'м. Запоріжжя, пр. Соборний, 150-А',
-    lat: 47.8400, lng: 35.1300,
+    lat: 47.8444, lng: 35.1292,
     category: 'Гуманітарний хаб',
     services: 'Гуманітарна допомога маріупольцям, медична допомога, психолог',
     phone: '+38 050 399 20 35',
@@ -37,26 +37,28 @@ export const INITIAL_ORGANIZATIONS: Organization[] = [
     name: 'Центр "ЯМаріуполь" (Лівий берег)',
     region: 'Kyiv',
     address: 'м. Київ, вул. Магнітогорська, 9',
-    lat: 50.4600, lng: 30.6400,
+    lat: 50.4563, lng: 30.6410,
     category: 'Гуманітарний хаб',
     services: 'Підтримка ВПО з Маріуполя, юридичні консультації',
     phone: '+38 095 150 00 00',
     email: 'kyiv@iamariupol.org',
     status: 'Active',
-    driveFolderUrl: '', budget: 0
+    driveFolderUrl: '', budget: 0,
+		workingHours: 'Пн-Пт 09:00-18:00'
   },
   {
     id: 'caritas_kyiv',
     name: 'БФ "Карітас-Київ"',
     region: 'Kyiv',
     address: 'м. Київ, вул. Микитенка, 7Б',
-    lat: 50.4872, lng: 30.5963,
+    lat: 50.4855, lng: 30.5966,
     category: 'Благодійна організація',
     services: 'Соціальна опіка, кризовий центр',
     phone: '+38 098 189 35 15',
     email: 'info@caritas.kyiv.ua',
     status: 'Active',
-    driveFolderUrl: '', budget: 0
+    driveFolderUrl: '', budget: 0,
+		workingHours: 'Пн-Пт 09:00-18:00'
   }
 ];
 

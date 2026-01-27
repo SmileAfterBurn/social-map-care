@@ -12,6 +12,9 @@ import { PresentationModal } from './components/PresentationModal';
 import { RegistryModal } from './components/RegistryModal';
 import { PrivacyPolicyModal } from './components/PrivacyPolicyModal';
 import { TermsOfServiceModal } from './components/TermsOfServiceModal';
+import { CreatorLoginModal } from './components/CreatorLoginModal';
+import { MobileToolbar } from './components/MobileToolbar';
+import { FilterModal } from './components/FilterModal';
 import { INITIAL_ORGANIZATIONS, REGION_CONFIG } from './constants';
 import { Organization, RegionName, UserSession, UserRole } from './types';
 
@@ -44,6 +47,8 @@ const App: React.FC = () => {
   const [traceLogs, setTraceLogs] = useState<string[]>([]);
   const [lcpValue, setLcpValue] = useState<number | null>(null);
   const [chatPrefill, setChatPrefill] = useState<string | null>(null);
+  const [isCreatorLoginOpen, setIsCreatorLoginOpen] = useState(false);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   const [currentUser, setCurrentUser] = useState<UserSession>({
     id: 'user_1',
@@ -98,6 +103,7 @@ const App: React.FC = () => {
 
   const changeRole = (role: UserRole) => {
     const names: Record<UserRole, string> = {
+			'Creator': 'Творець',
       'Guest': 'Відвідувач',
       'Partner': 'Партнер проекту',
       'Manager': 'Кейс-менеджер',
@@ -144,6 +150,12 @@ const App: React.FC = () => {
     const moreCount = orgs.length > 10 ? ` та ще ${orgs.length - 10} організацій` : '';
     setChatPrefill(`Зроби групову перевірку актуальності даних для наступного списку організацій у поточному регіоні:\n${listString}${moreCount}.\n\nПеревір їх через Google Search та надай короткий звіт про їх статус та можливі зміни у контактах.`);
     setIsChatOpen(true);
+  };
+
+	const handleCreatorLogin = (password: string) => {
+    if (password === 'TIGUAN') {
+      changeRole('Creator');
+    }
   };
 
   const filteredOrgs = useMemo(() => {
@@ -199,7 +211,20 @@ const App: React.FC = () => {
       {isPrivacyOpen && <PrivacyPolicyModal onClose={() => setIsPrivacyOpen(false)} />}
       {isTermsOpen && <TermsOfServiceModal onClose={() => setIsTermsOpen(false)} />}
       {referralOrg && <ReferralModal organization={referralOrg} onClose={() => setReferralOrg(null)} />}
-      {isRemoteSupportOpen && <RemoteSupportModal onClose={() => setIsRemoteSupportOpen(false)} />}
+			{isRemoteSupportOpen && <RemoteSupportModal onClose={() => setIsRemoteSupportOpen(false)} />}
+			<CreatorLoginModal
+        isOpen={isCreatorLoginOpen}
+        onClose={() => setIsCreatorLoginOpen(false)}
+        onLogin={handleCreatorLogin}
+      />
+       <FilterModal
+        isOpen={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+        categories={uniqueCategories}
+        selectedCategories={selectedCategories}
+        onToggleCategory={toggleCategory}
+      />
+
 
       <header className="h-16 shrink-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 z-30">
         <div className="flex items-center gap-4">
@@ -213,9 +238,18 @@ const App: React.FC = () => {
             </button>
           </div>
         </div>
+				<div className="flex items-center gap-2">
+          <button
+            onClick={() => setIsCreatorLoginOpen(true)}
+            className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            title="Вхід для Творця"
+          >
+            <UserIcon size={20} className="text-slate-600 dark:text-slate-300" />
+          </button>
+        </div>
       </header>
 
-      <main className="flex-1 relative">
+      <main className="flex-1 relative pb-16 sm:pb-0">
         {mobileTab === 'map' ? (
           <div className="absolute inset-0 z-0">
             <MapView
@@ -236,11 +270,18 @@ const App: React.FC = () => {
           </div>
         )}
       </main>
+      <MobileToolbar
+        activeTab={mobileTab}
+        onTabChange={setMobileTab}
+        onSearch={setSearchTerm}
+        onFilterClick={() => setIsFilterModalOpen(true)}
+        searchTerm={searchTerm}
+      />
 
       {/* Floating Action Button for Chat */}
       <button
         onClick={() => setIsChatOpen(true)}
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 bg-teal-600 hover:bg-teal-700 text-white rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
+        className="fixed bottom-24 right-6 z-40 w-14 h-14 bg-teal-600 hover:bg-teal-700 text-white rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-105 active:scale-95 sm:bottom-6"
       >
         <Sparkles size={24} />
       </button>
