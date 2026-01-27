@@ -13,7 +13,7 @@ export default defineConfig({
   // Configure the build process.
   build: {
     // Specify the output directory for the build.
-    outDir: 'dist',
+    outDir: 'build',
     // Disable sourcemaps for the build.
     sourcemap: false,
     // Set the chunk size warning limit to 1600KB.

@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Organization } from '../types';
 import { Navigation, MapPin, ZoomIn, ZoomOut, LocateFixed } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
@@ -14,7 +14,6 @@ import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 
-delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl,
   iconUrl,
@@ -30,16 +29,6 @@ interface MapViewProps {
   zoom?: number;
   isDarkMode?: boolean;
 }
-
-const ActiveOrgEffect: React.FC<{ activeOrg: Organization | null }> = ({ activeOrg }) => {
-    const map = useMap();
-    useEffect(() => {
-      if (activeOrg && typeof activeOrg.lat === 'number') {
-        map.flyTo([activeOrg.lat, activeOrg.lng], 15);
-      }
-    }, [activeOrg, map]);
-    return null;
-};
 
 export const MapView: React.FC<MapViewProps> = ({
   organizations = [],
@@ -66,6 +55,12 @@ export const MapView: React.FC<MapViewProps> = ({
     const org = organizations.find(o => o.id === selectedOrgId);
     setActiveOrg(org || null);
   }, [selectedOrgId, organizations]);
+
+  useEffect(() => {
+    if (activeOrg && typeof activeOrg.lat === 'number' && mapRef.current) {
+      mapRef.current.flyTo([activeOrg.lat, activeOrg.lng], 15);
+    }
+  }, [activeOrg]);
 
   const getMarkerIcon = (org: Organization, isSelected: boolean) => {
     if (org.logoUrl) {
@@ -163,8 +158,6 @@ export const MapView: React.FC<MapViewProps> = ({
                 );
             })}
         </MarkerClusterGroup>
-
-        <ActiveOrgEffect activeOrg={activeOrg} />
 
       </MapContainer>
 

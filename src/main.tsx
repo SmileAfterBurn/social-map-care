@@ -1,13 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { LatLngBoundsExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapView } from '../components/MapView';
 import { TableView } from '../components/TableView';
 import { FilterModal } from '../components/FilterModal';
 import { Organization, RegionName, UserSession } from '../types';
 import { INITIAL_ORGANIZATIONS } from '../organizations';
-
-const UKRAINE_BOUNDS: LatLngBoundsExpression = [[44.3, 22.1], [52.4, 40.2]];
 
 // Dummy user for TableView
 const dummyUser: UserSession = {
@@ -16,9 +13,15 @@ const dummyUser: UserSession = {
   role: 'Guest',
 };
 
-const Firebase_App: React.FC = () => {
-  const [organizations] = useState<Organization[]>(INITIAL_ORGANIZATIONS);
-  const [filteredOrganizations, setFilteredOrganizations] = useState<Organization[]>(INITIAL_ORGANIZATIONS);
+const App: React.FC = () => {
+  const organizations: Organization[] = INITIAL_ORGANIZATIONS;
+
+  const [filters, setFilters] = useState<{
+    region: RegionName | '';
+    services: string[];
+    categories: string[];
+  }>({ region: '', services: [], categories: [] });
+
   const [selectedOrgId, setSelectedOrgId] = useState<string | null>(null);
   const [isFilterModalOpen, setFilterModalOpen] = useState(false);
   const [view, setView] = useState<'map' | 'table'>('map');
@@ -28,9 +31,7 @@ const Firebase_App: React.FC = () => {
     return [...new Set(allCategories)];
   }, [organizations]);
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-
-  const handleFilterChange = (filters: { region: RegionName | ''; services: string[]; categories: string[] }) => {
+  const filteredOrganizations = useMemo(() => {
     let result = organizations;
 
     if (filters.region) {
@@ -45,16 +46,8 @@ const Firebase_App: React.FC = () => {
       result = result.filter(org => filters.categories.includes(org.category));
     }
 
-    setFilteredOrganizations(result);
-  };
-
-  const handleToggleCategory = (category: string) => {
-    const newSelectedCategories = selectedCategories.includes(category)
-      ? selectedCategories.filter(c => c !== category)
-      : [...selectedCategories, category];
-    setSelectedCategories(newSelectedCategories);
-    handleFilterChange({ region: '', services: [], categories: newSelectedCategories });
-  };
+    return result;
+  }, [organizations, filters]);
 
   const handleSelectOrg = (id: string | null) => {
     setSelectedOrgId(id);
@@ -68,6 +61,17 @@ const Firebase_App: React.FC = () => {
   const handleOpenReferral = (org: Organization) => {
     // Placeholder for future functionality
     console.log("Opening referral for:", org.name);
+  };
+
+  const handleToggleCategory = (category: string) => {
+    const newCategories = filters.categories.includes(category)
+      ? filters.categories.filter(c => c !== category)
+      : [...filters.categories, category];
+    
+    setFilters(prevFilters => ({
+        ...prevFilters,
+        categories: newCategories,
+    }));
   };
 
   return (
@@ -105,11 +109,11 @@ const Firebase_App: React.FC = () => {
         isOpen={isFilterModalOpen}
         onClose={() => setFilterModalOpen(false)}
         categories={categories}
-        selectedCategories={selectedCategories}
+        selectedCategories={filters.categories}
         onToggleCategory={handleToggleCategory}
       />
     </div>
   );
 };
 
-export default Firebase_App;
+export default App;

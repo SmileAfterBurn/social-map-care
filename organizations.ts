@@ -161,7 +161,7 @@ function getDistributedLocation(centerLat: number, centerLng: number, index: num
   const angle = Math.random() * Math.PI * 2;
   return {
     lat: centerLat + Math.sin(angle) * radius,
-    lng: centerLng + Math.cos(angle) * radius * 1.5
+    lng: centerLng + Math.cos(angle) * radius
   };
 }
 
@@ -188,6 +188,7 @@ for (let i = INITIAL_ORGANIZATIONS.length; i < TARGET_COUNT; i++) {
     email: `help_${i}@socialmap.ua`,
     status: 'Active',
     driveFolderUrl: '',
-    budget: 0
+    budget: 0,
+    workingHours: 'Цілодобово'
   });
 }
