@@ -20,7 +20,7 @@ export const MobileToolbar: React.FC<MobileToolbarProps> = ({ activeTab, onTabCh
           <List size={24} />
         </button>
       </div>
-      <div className="flex-1 mx-4">
+      <div id="mobile-toolbar-search" className="flex-1 mx-4">
         <div className="relative">
           <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
@@ -32,7 +32,7 @@ export const MobileToolbar: React.FC<MobileToolbarProps> = ({ activeTab, onTabCh
           />
         </div>
       </div>
-      <button onClick={onFilterClick} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+      <button id="mobile-toolbar-filter" onClick={onFilterClick} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
         <Filter size={24} />
       </button>
     </div>

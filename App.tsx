@@ -5,6 +5,7 @@ import { TableView } from './components/TableView';
 import { GeminiChat } from './components/GeminiChat';
 import { CodeFixModal } from './components/CodeFixModal';
 import { IntroModal } from './components/IntroModal';
+import { GuidedTour } from './components/GuidedTour';
 import { RemoteSupportModal } from './components/RemoteSupportModal';
 import { ReferralModal } from './components/ReferralModal';
 import { AboutModal } from './components/AboutModal';
@@ -33,8 +34,9 @@ const App: React.FC = () => {
   const [activeRegion, setActiveRegion] = useState<RegionName>('All');
   const [selectedCategories, setSelectedCategories] = useState<string[]>(uniqueCategories);
   const [showIntro, setShowIntro] = useState(!localStorage.getItem('hide_intro_annotation'));
+  const [isTourActive, setIsTourActive] = useState(false);
   const [isRemoteSupportOpen, setIsRemoteSupportOpen] = useState(false);
-  const [isAboutOpen, setIsAboutOpen] = useState(true);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [aboutInitialTab, setAboutInitialTab] = useState<'about' | 'donate' | 'partners' | 'legal'>('about');
   const [isPresentationOpen, setIsPresentationOpen] = useState(false);
   const [isRegistryOpen, setIsRegistryOpen] = useState(false);
@@ -204,7 +206,18 @@ const App: React.FC = () => {
 
   return (
     <div className="h-screen flex flex-col bg-slate-50 dark:bg-slate-950 overflow-hidden font-sans transition-colors duration-300">
-      {showIntro && <IntroModal onComplete={() => setShowIntro(false)} onOpenPrivacy={() => setIsPrivacyOpen(true)} onOpenTerms={() => setIsTermsOpen(true)} />}
+      {showIntro && <IntroModal 
+        onComplete={() => setShowIntro(false)}
+        onStartTour={() => {
+          setShowIntro(false);
+          setIsTourActive(true);
+        }}
+        onOpenAbout={() => openAbout('partners')}
+        onOpenPrivacy={() => setIsPrivacyOpen(true)} 
+        onOpenTerms={() => setIsTermsOpen(true)} 
+      />}
+      {isTourActive && <GuidedTour onComplete={() => setIsTourActive(false)} />}
+
       {isAboutOpen && <AboutModal initialTab={aboutInitialTab} onClose={() => setIsAboutOpen(false)} onOpenPresentation={() => setIsPresentationOpen(true)} onOpenPrivacy={() => setIsPrivacyOpen(true)} onOpenTerms={() => setIsTermsOpen(true)} />}
       {isPresentationOpen && <PresentationModal onClose={() => setIsPresentationOpen(false)} />}
       {isRegistryOpen && <RegistryModal organizations={organizations} user={currentUser} onClose={() => setIsRegistryOpen(false)} />}
@@ -238,7 +251,7 @@ const App: React.FC = () => {
             </button>
           </div>
         </div>
-				<div className="flex items-center gap-2">
+				<div id="creator-login-button" className="flex items-center gap-2">
           <button
             onClick={() => setIsCreatorLoginOpen(true)}
             className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
@@ -251,7 +264,7 @@ const App: React.FC = () => {
 
       <main className="flex-1 relative pb-16 sm:pb-0">
         {mobileTab === 'map' ? (
-          <div className="absolute inset-0 z-0">
+          <div id="map-view" className="absolute inset-0 z-0">
             <MapView
               organizations={filteredOrgs}
               selectedOrgId={selectedOrgId}
@@ -280,6 +293,7 @@ const App: React.FC = () => {
 
       {/* Floating Action Button for Chat */}
       <button
+        id="chat-fab"
         onClick={() => setIsChatOpen(true)}
         className="fixed bottom-24 right-6 z-40 w-14 h-14 bg-teal-600 hover:bg-teal-700 text-white rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-105 active:scale-95 sm:bottom-6"
       >
