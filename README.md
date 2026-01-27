@@ -1,11 +1,13 @@
 SmileAfterBurn. Social Projects
- * © 2026 Ілля Чернов. Усі права захищено.
+ * © 2024 Ілля Чернов. Усі права захищено.
  * Розробник: Ілля Чернов
 <div align="center">  
 <img width="800" height="200" alt="SmileAfterBurn Банер" src="https://github.com/SmileAfterBurn/SmileAfterBurn/blob/main/SAfB%20Baner.svg">
 </div>  
 
 ### Волонтер · Розробник  
+
+
 
 
 
@@ -19,7 +21,7 @@ SmileAfterBurn. Social Projects
 
 Так народилася ідея **SmileAfterBurn — посміхатися після пережитого болю.**  
 
-У вересні 2025 року я розпочав реалізацію першої частини екосистеми — **Інклюзивної мапи соціальних послуг України.**  
+У вересні 2023 року я розпочав реалізацію першої частини екосистеми — **Інклюзивної мапи соціальних послуг України.**  
 
 ---
 
@@ -133,7 +135,7 @@ Hello! My name is Illia. Until the age of 30, I was just an ordinary guy: volunt
 In 2022, my life changed — as did the lives of all Ukrainians. Right after the full-scale invasion began, I joined the relief efforts together with the Smile Foundation. For the first month, I was both trading petroleum products from a single phone and preparing to welcome the first wave of people forced to flee occupation.
 From June onward, I dedicated all my time (sometimes 15–20 hours a day) to helping people. A year later, due to stress and overload, I temporarily lost the ability to walk — for about three months. That period made me rethink many things: the rights of people with disabilities, the value of support, and the fact that material wealth is not the most important thing in our fragile world.
 That’s when the idea of SmileAfterBurn — smiling after the pain — was born.
-In September 2025, I began implementing the first part of the ecosystem: an Inclusive Map of Social Services in Ukraine.
+In September 2023, I began implementing the first part of the ecosystem: an Inclusive Map of Social Services in Ukraine.
 ________________________________________
 🎯 SmileAfterBurn.social
 A digital ecosystem designed to support vulnerable groups in Ukraine by integrating artificial intelligence with humanitarian principles and safe AI practices.
