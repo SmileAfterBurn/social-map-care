@@ -70,7 +70,6 @@ export interface SyncStatus {
 // Global Declarations for Browser and ProcessShim
 declare global {
   interface Window {
-    aistudio: any; 
     process?: {
       env: {
         API_KEY: string;
